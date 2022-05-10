@@ -9,6 +9,7 @@ import com.example.demo.seguridad.entity.Usuario;
 public interface UsuarioRepo extends JpaRepository<Usuario, Integer>{
 	
 	Optional<Usuario> findByNombreUsuario(String nombreUsuario);
+	Usuario findByNombre(String nombreUsuario);
 	boolean existsByNombreUsuario(String nombreUsuario);
 	boolean existsByEmail(String email);
 
