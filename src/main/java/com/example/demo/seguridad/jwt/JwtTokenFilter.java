@@ -25,7 +25,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 	JwtProvider jwtProvider;
 	
 	@Autowired
-	UserDetailsServiceImpl userImpl;
+	UserDetailsServiceImpl userDetailsServiceImpl;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -34,7 +34,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 			String token = getToken(request);
 			if(token != null && jwtProvider.validateToken(token)) {
 				String nombreUser = jwtProvider.getNombreUserFromToken(token);
-				UserDetails userDetails = userImpl.loadUserByUsername(nombreUser);
+				UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(nombreUser);
 				
 				UsernamePasswordAuthenticationToken auth = 
 						new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

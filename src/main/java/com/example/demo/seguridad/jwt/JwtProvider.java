@@ -28,7 +28,7 @@ import io.jsonwebtoken.UnsupportedJwtException;
 @Component
 public class JwtProvider {
 	
-	private final static Logger logger = LoggerFactory.getLogger(JwtEntryPoint.class);
+	private final static Logger logger = LoggerFactory.getLogger(JwtProvider.class);
 	
 	@Value("${jwt.secret}")
 	private String secret;
@@ -36,8 +36,8 @@ public class JwtProvider {
 	@Value("${jwt.expiration}")
 	private int expiration;
 	
-	public String generarToken(Authentication auth) {
-		UsuarioPrincipal userPrincipal = (UsuarioPrincipal) auth.getPrincipal();
+	public String generarToken(Authentication authentication) {
+		UsuarioPrincipal userPrincipal = (UsuarioPrincipal) authentication.getPrincipal();
 		List<String> roles = userPrincipal.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
 		return Jwts.builder()
 				.setSubject(userPrincipal.getUsername())
@@ -75,10 +75,10 @@ public class JwtProvider {
 			Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(jwtDto.getToken());
 		}catch (ExpiredJwtException e) {
 			JWT jwt = JWTParser.parse(jwtDto.getToken());
-			JWTClaimsSet claim = jwt.getJWTClaimsSet();
-			String nombreUsuario = claim.getSubject();
+			JWTClaimsSet claims = jwt.getJWTClaimsSet();
+			String nombreUsuario = claims.getSubject();
 			@SuppressWarnings("unchecked")
-			List<String> roles = (List<String>) claim.getClaim("roles");
+			List<String> roles = (List<String>) claims.getClaim("roles");
 			return Jwts.builder()
 					.setSubject(nombreUsuario)
 					.claim("roles", roles)

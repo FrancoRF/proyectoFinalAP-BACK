@@ -78,10 +78,10 @@ public class AuthController {
 	public ResponseEntity<JwtDto> login(@RequestBody LoginUsuario loginUsuario, BindingResult binResult){
 		if(binResult.hasErrors())
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		Authentication auth = 
+		Authentication authentication = 
 				authManager.authenticate(new UsernamePasswordAuthenticationToken(loginUsuario.getNombreUsuario(), loginUsuario.getPassword()));
-		SecurityContextHolder.getContext().setAuthentication(auth);
-		String jwt = jwtProvider.generarToken(auth);
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		String jwt = jwtProvider.generarToken(authentication);
 		JwtDto jwtDto = new JwtDto(jwt);
 		return new ResponseEntity<>(jwtDto, HttpStatus.OK);
 	}
