@@ -1,4 +1,4 @@
-package com.example.demo.seguridad.jwt;
+package com.example.demo.security.jwt;
 
 import java.io.IOException;
 
@@ -16,11 +16,11 @@ import org.springframework.stereotype.Component;
 public class JwtEntryPoint implements AuthenticationEntryPoint {
 	
 	private final static Logger logger = LoggerFactory.getLogger(JwtEntryPoint.class);
-
+	
 	@Override
 	public void commence(HttpServletRequest req, HttpServletResponse res,
 			AuthenticationException e) throws IOException, ServletException {
-		logger.error("Fallo en el metodo commence");
+		logger.error("fail en el metodo commence");
 		res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "no autorizado");
 	}
 

@@ -1,4 +1,4 @@
-package com.example.demo.seguridad.jwt;
+package com.example.demo.security.jwt;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -12,13 +12,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.seguridad.dto.JwtDto;
-import com.example.demo.seguridad.entity.UsuarioPrincipal;
+import com.example.demo.security.dto.JwtDto;
+import com.example.demo.security.entity.UsuarioPrincipal;
 import com.nimbusds.jwt.JWT;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.JWTParser;
 
-import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.ExpiredJwtException; 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -37,10 +37,10 @@ public class JwtProvider {
 	private int expiration;
 	
 	public String generarToken(Authentication authentication) {
-		UsuarioPrincipal userPrincipal = (UsuarioPrincipal) authentication.getPrincipal();
-		List<String> roles = userPrincipal.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
+		UsuarioPrincipal usuarioPrincipal = (UsuarioPrincipal) authentication.getPrincipal();
+		List<String> roles = usuarioPrincipal.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
 		return Jwts.builder()
-				.setSubject(userPrincipal.getUsername())
+				.setSubject(usuarioPrincipal.getUsername()) 
 				.claim("roles", roles)
 				.setIssuedAt(new Date())
 				.setExpiration(new Date(new Date().getTime() + expiration * 100))
@@ -48,11 +48,11 @@ public class JwtProvider {
 				.compact();
 	}
 	
-	public String getNombreUserFromToken(String token) {
-		return Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody().getSubject();
-	}
-	
-	public boolean validateToken(String token){
+	public String getNombreUsuarioFromToken(String token){
+        return Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody().getSubject();
+    }
+
+    public boolean validateToken(String token){
         try {
             Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token);
             return true;
@@ -68,28 +68,27 @@ public class JwtProvider {
             logger.error("fail en la firma");
         }
         return false;
-	}
-	
+    }
+    
+    
 	public String refreshToken(JwtDto jwtDto) throws ParseException {
-		try {
-			Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(jwtDto.getToken());
-		}catch (ExpiredJwtException e) {
-			JWT jwt = JWTParser.parse(jwtDto.getToken());
-			JWTClaimsSet claims = jwt.getJWTClaimsSet();
-			String nombreUsuario = claims.getSubject();
-			@SuppressWarnings("unchecked")
+    	try {
+    		Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(jwtDto.getToken());
+    	}catch (ExpiredJwtException e) {
+    		JWT jwt = JWTParser.parse(jwtDto.getToken());
+        	JWTClaimsSet claims = jwt.getJWTClaimsSet();
+        	String nombreUsuario = claims.getSubject();
+        	@SuppressWarnings("unchecked")
 			List<String> roles = (List<String>) claims.getClaim("roles");
-			return Jwts.builder()
-					.setSubject(nombreUsuario)
-					.claim("roles", roles)
-					.setIssuedAt(new Date())
-					.setExpiration(new Date(new Date().getTime() + expiration))
-					.signWith(SignatureAlgorithm.HS512, secret.getBytes())
-					.compact();
-		} 
-		return null;
-	}
-	
-	
+        	return Jwts.builder()
+    				.setSubject(nombreUsuario)
+    				.claim("roles", roles)
+    		        .setIssuedAt(new Date())
+    		        .setExpiration(new Date(new Date().getTime() + expiration))
+    		        .signWith(SignatureAlgorithm.HS512, secret.getBytes())
+    		        .compact(); 
+    	}
+    	return null;
+    }
 	
  }

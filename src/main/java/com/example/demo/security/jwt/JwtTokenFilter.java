@@ -1,4 +1,4 @@
-package com.example.demo.seguridad.jwt;
+package com.example.demo.security.jwt;
 
 import java.io.IOException;
 
@@ -15,7 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.example.demo.seguridad.service.UserDetailsServiceImpl;
+import com.example.demo.security.service.UserDetailsServiceImpl;
 
 public class JwtTokenFilter extends OncePerRequestFilter {
 	
@@ -33,7 +33,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 		try {
 			String token = getToken(request);
 			if(token != null && jwtProvider.validateToken(token)) {
-				String nombreUser = jwtProvider.getNombreUserFromToken(token);
+				String nombreUser = jwtProvider.getNombreUsuarioFromToken(token);
 				UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(nombreUser);
 				
 				UsernamePasswordAuthenticationToken auth = 

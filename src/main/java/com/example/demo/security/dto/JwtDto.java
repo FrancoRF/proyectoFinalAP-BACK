@@ -1,4 +1,4 @@
-package com.example.demo.seguridad.dto;
+package com.example.demo.security.dto;
 
 public class JwtDto {
 	

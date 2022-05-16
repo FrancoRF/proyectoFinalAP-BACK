@@ -1,4 +1,4 @@
-package com.example.demo.seguridad.service;
+package com.example.demo.security.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,8 +8,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.seguridad.entity.Usuario;
-import com.example.demo.seguridad.repository.UsuarioRepo;
+import com.example.demo.security.entity.Usuario;
+import com.example.demo.security.repository.UsuarioRepo;
 
 @Service
 @Transactional

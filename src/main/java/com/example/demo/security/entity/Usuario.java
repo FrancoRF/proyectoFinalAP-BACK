@@ -1,4 +1,4 @@
-package com.example.demo.seguridad.entity;
+package com.example.demo.security.entity;
 
 import java.io.Serializable;
 import java.util.HashSet;

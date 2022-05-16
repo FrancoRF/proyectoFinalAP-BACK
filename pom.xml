@@ -17,6 +17,7 @@
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -82,7 +83,6 @@
 		    <artifactId>nimbus-jose-jwt</artifactId>
 		    <version>9.18</version>
 		</dependency>
-		
 		
 	</dependencies>
 

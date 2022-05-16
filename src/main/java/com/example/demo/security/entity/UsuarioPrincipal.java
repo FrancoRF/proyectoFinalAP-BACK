@@ -1,4 +1,4 @@
-package com.example.demo.seguridad.entity;
+package com.example.demo.security.entity;
 
 import java.util.Collection;
 import java.util.List;
@@ -8,7 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-public class UsuarioPrincipal implements UserDetails{
+public class UsuarioPrincipal implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 	

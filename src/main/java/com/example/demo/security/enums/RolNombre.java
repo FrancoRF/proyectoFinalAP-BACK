@@ -1,4 +1,4 @@
-package com.example.demo.seguridad.enums;
+package com.example.demo.security.enums;
 
 public enum RolNombre {
 	

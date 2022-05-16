@@ -1,4 +1,4 @@
-package com.example.demo.seguridad.entity;
+package com.example.demo.security.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -8,7 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
-import com.example.demo.seguridad.enums.RolNombre;
+import com.example.demo.security.enums.RolNombre;
 
 @Entity
 public class Rol {

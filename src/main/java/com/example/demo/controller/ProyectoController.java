@@ -25,7 +25,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
-@RequestMapping("/proyectos")
+@RequestMapping("/auth/proyectos")
 @CrossOrigin(origins = "*")
 public class ProyectoController {
 	

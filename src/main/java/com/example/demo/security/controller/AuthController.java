@@ -1,4 +1,4 @@
-package com.example.demo.seguridad.controller;
+package com.example.demo.security.controller;
 
 import java.text.ParseException;
 import java.util.HashSet;
@@ -14,23 +14,20 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.Mensaje;
-import com.example.demo.seguridad.dto.JwtDto;
-import com.example.demo.seguridad.dto.LoginUsuario;
-import com.example.demo.seguridad.dto.NuevoUsuario;
-import com.example.demo.seguridad.entity.Rol;
-import com.example.demo.seguridad.entity.Usuario;
-import com.example.demo.seguridad.enums.RolNombre;
-import com.example.demo.seguridad.jwt.JwtProvider;
-import com.example.demo.seguridad.service.RolService;
-import com.example.demo.seguridad.service.UsuarioService;
+import com.example.demo.security.dto.JwtDto;
+import com.example.demo.security.dto.LoginUsuario;
+import com.example.demo.security.dto.NuevoUsuario;
+import com.example.demo.security.entity.Rol;
+import com.example.demo.security.entity.Usuario;
+import com.example.demo.security.enums.RolNombre;
+import com.example.demo.security.jwt.JwtProvider;
+import com.example.demo.security.service.RolService;
+import com.example.demo.security.service.UsuarioService;
 
 @RestController
 @RequestMapping("/auth")
@@ -38,7 +35,7 @@ import com.example.demo.seguridad.service.UsuarioService;
 public class AuthController {
 	
 	@Autowired
-	PasswordEncoder contraseñaCodificada;
+	PasswordEncoder passwordEncoder;
 	
 	@Autowired
 	AuthenticationManager authManager;
@@ -63,7 +60,7 @@ public class AuthController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ese email ya existe");
 		Usuario usuario =
 				new Usuario(nuevoUsuario.getNombre(), nuevoUsuario.getNombreUsuario(), nuevoUsuario.getEmail(), 
-						contraseñaCodificada.encode(nuevoUsuario.getPassword()));
+						passwordEncoder.encode(nuevoUsuario.getPassword()));
 		Set<Rol> roles = new HashSet<>();
 		roles.add(rolService.getByRolNombre(RolNombre.ROLE_USER).get());
 		if(nuevoUsuario.getRoles().contains("admin"))
@@ -92,19 +89,5 @@ public class AuthController {
 		JwtDto jwt = new JwtDto(token);
 		return new ResponseEntity<>(jwt, HttpStatus.OK);
 	}
-	
-	@DeleteMapping("/eliminar/{nombreUsuario}")
-	public ResponseEntity<?> eliminar(@PathVariable("nombreUsuario") String nombreUsuario){
-		if(!userService.existsByNombreUsuario(nombreUsuario))
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("no existe el usuario");
-		Usuario user = userService.getByNombre(nombreUsuario);
-		userService.eliminar(user);
-		if(user.getNombre().length() != 0) {
-			return new ResponseEntity<>(new Mensaje("No se elimino el usuario"), HttpStatus.BAD_REQUEST);
-		} else {
-			return new ResponseEntity<>(new Mensaje("Usuario Eliminado con exito"), HttpStatus.OK);
-		}
-	}
-	
 
 }

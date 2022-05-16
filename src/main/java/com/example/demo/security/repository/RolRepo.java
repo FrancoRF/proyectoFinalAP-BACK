@@ -1,12 +1,12 @@
-package com.example.demo.seguridad.repository;
+package com.example.demo.security.repository;
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.seguridad.entity.Rol;
-import com.example.demo.seguridad.enums.RolNombre;
+import com.example.demo.security.entity.Rol;
+import com.example.demo.security.enums.RolNombre;
 
 @Repository
 public interface RolRepo extends JpaRepository<Rol, Integer>{

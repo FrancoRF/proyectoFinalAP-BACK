@@ -25,7 +25,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
-@RequestMapping("/contenedores")
+@RequestMapping("/auth/contenedores")
 @CrossOrigin(origins = "*")
 public class AcercadeController {
 	
