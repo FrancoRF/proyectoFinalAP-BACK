@@ -14,8 +14,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import com.example.demo.entity.Acercade;
+import com.example.demo.entity.Educacion;
+import com.example.demo.entity.Experiencia;
+import com.example.demo.entity.Habilidad;
+import com.example.demo.entity.Perfil;
+import com.example.demo.entity.Proyecto;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "user")
@@ -35,10 +44,35 @@ public class Usuario implements Serializable{
 	private String email;
 	@NotNull
 	private String password;
+	
 	@NotNull
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	@JoinTable(name = "rol_user", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "rol_id"))
 	private Set<Rol> roles = new HashSet<>();
+	
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+	@JsonIgnoreProperties("usuario")
+	private Set<Perfil> perfil = new HashSet<>();
+
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+	@JsonIgnoreProperties("usuario")
+	private Set<Acercade> acercade = new HashSet<>();
+	
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+	@JsonIgnoreProperties("usuario")
+	private Set<Educacion> educacion = new HashSet<>();
+	
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+	@JsonIgnoreProperties("usuario")
+	private Set<Experiencia> experiencia = new HashSet<>();
+	
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+	@JsonIgnoreProperties("usuario")
+	private Set<Habilidad> habilidad = new HashSet<>();
+
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+	@JsonIgnoreProperties("usuario")
+	private Set<Proyecto> proyecto = new HashSet<>();
 
 	public Usuario() {
 	}
@@ -98,6 +132,54 @@ public class Usuario implements Serializable{
 
 	public void setRoles(Set<Rol> roles) {
 		this.roles = roles;
+	}
+	
+	public Set<Perfil> getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(Set<Perfil> perfil) {
+		this.perfil = perfil;
+	}
+	
+	public Set<Acercade> getAcercade() {
+		return acercade;
+	}
+
+	public void setAcercade(Set<Acercade> acercade) {
+		this.acercade = acercade;
+	}
+	
+	public Set<Educacion> getEducacion() {
+		return educacion;
+	}
+
+	public void setEducacion(Set<Educacion> educacion) {
+		this.educacion = educacion;
+	}
+
+	public Set<Experiencia> getExperiencia() {
+		return experiencia;
+	}
+
+	public void setExperiencia(Set<Experiencia> experiencia) {
+		this.experiencia = experiencia;
+	}
+	
+	public Set<Habilidad> getHabilidad() {
+		return habilidad;
+	}
+
+	public void setHabilidad(Set<Habilidad> habilidad) {
+		this.habilidad = habilidad;
+	}
+	
+	public Set<Proyecto> getProyecto() {
+		return proyecto;
+	}
+
+	public void setProyecto(Set<Proyecto> proyecto) {
+		this.proyecto = proyecto;
 	}
 
 }

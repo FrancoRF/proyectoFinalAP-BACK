@@ -3,9 +3,15 @@ package com.example.demo.entity;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.example.demo.security.entity.Usuario;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Acercade implements Serializable {
@@ -15,10 +21,12 @@ public class Acercade implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
 	private String texto;
 	
-	
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "usuario_nombre", referencedColumnName = "nombreUsuario")
+	@JsonIgnoreProperties("acercade")
+	private Usuario usuario;
 	
 	public Acercade() {
 	}
