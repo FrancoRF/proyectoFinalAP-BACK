@@ -3,9 +3,16 @@ package com.example.demo.entity;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.example.demo.security.entity.Usuario;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Habilidad implements Serializable {
@@ -17,6 +24,11 @@ public class Habilidad implements Serializable {
 	private int id;
 	private String titulo;
 	private int porcentaje;
+	
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "nombre_usuario", referencedColumnName = "nombreUsuario")
+	@JsonIgnoreProperties("habilidad")
+	private Usuario usuario;
 	
 	public Habilidad() {
 	}
@@ -50,5 +62,15 @@ public class Habilidad implements Serializable {
 	public void setPorcentaje(int porcentaje) {
 		this.porcentaje = porcentaje;
 	}
+	
+	@JsonIgnore
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
 
 }

@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.Mensaje;
 import com.example.demo.entity.Educacion;
+import com.example.demo.security.entity.Usuario;
+import com.example.demo.security.service.UsuarioService;
 import com.example.demo.service.EducacionService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -31,6 +33,9 @@ public class EducacionController {
 	
 	@Autowired
 	EducacionService educacionService;
+	
+	@Autowired
+	UsuarioService usuarioService;
 
 	@GetMapping("/")
 	public ResponseEntity<List<Educacion>> listEducacion(){
@@ -39,8 +44,10 @@ public class EducacionController {
 	}
 	
 	@PostMapping("/crear")
-	public ResponseEntity<Mensaje> createEntity(@RequestParam("entidad") String entidad) throws JsonMappingException, JsonProcessingException{
+	public ResponseEntity<Mensaje> createEntity(@RequestParam("entidad") String entidad, @RequestParam("nombreUs") String nombreUs) throws JsonMappingException, JsonProcessingException{
 		Educacion educacion = new ObjectMapper().readValue(entidad, Educacion.class);
+		Usuario usuario = usuarioService.getByNombre(nombreUs);
+		educacion.setUsuario(usuario);
 		Educacion dbEducacion = educacionService.save(educacion);
 		if(dbEducacion!=null) {
 			return new ResponseEntity<Mensaje>(new Mensaje("Experiencia creada con exito"), HttpStatus.OK);

@@ -22,6 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.dto.Mensaje;
 import com.example.demo.entity.Perfil;
+import com.example.demo.security.entity.Usuario;
+import com.example.demo.security.service.UsuarioService;
 import com.example.demo.service.PerfilService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -34,6 +36,9 @@ public class PerfilController {
 	
 	@Autowired
 	PerfilService perfilService;
+	
+	@Autowired
+	UsuarioService usuarioService;
 
 	@GetMapping("/")
 	public ResponseEntity<List<Perfil>> listExperiencia(){
@@ -56,12 +61,14 @@ public class PerfilController {
 	}
 	
 	@PostMapping("/crear")
-	public ResponseEntity<Mensaje> createEntity(@RequestParam("imagenPortada") MultipartFile imagenPortada ,@RequestParam("imagenPerfil") MultipartFile imagenPerfil ,@RequestParam("entidad") String entidad) throws IOException{
+	public ResponseEntity<Mensaje> createEntity(@RequestParam("imagenPortada") MultipartFile imagenPortada ,@RequestParam("imagenPerfil") MultipartFile imagenPerfil ,@RequestParam("entidad") String entidad, @RequestParam("nombreUs") String nombreUs) throws IOException{
 		Perfil perfil = new ObjectMapper().readValue(entidad, Perfil.class);
 		perfil.setImagenPer(imagenPerfil.getBytes());
 		perfil.setImgPerfil(imagenPerfil.getOriginalFilename());
 		perfil.setImagenPor(imagenPortada.getBytes());
 		perfil.setImgPortada(imagenPortada.getOriginalFilename());
+		Usuario usuario = usuarioService.getByNombre(nombreUs);
+		perfil.setUsuario(usuario);
 		Perfil dbPerfil = perfilService.save(perfil);
 		
 		if(dbPerfil!=null) {

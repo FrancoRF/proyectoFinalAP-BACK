@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.Mensaje;
 import com.example.demo.entity.Proyecto;
+import com.example.demo.security.entity.Usuario;
+import com.example.demo.security.service.UsuarioService;
 import com.example.demo.service.ProyectoService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -31,6 +33,9 @@ public class ProyectoController {
 	
 	@Autowired
 	ProyectoService proyectoService;
+	
+	@Autowired
+	UsuarioService usuarioService;
 
 	@GetMapping("/")
 	public ResponseEntity<List<Proyecto>> listProyecto(){
@@ -39,8 +44,10 @@ public class ProyectoController {
 	}
 	
 	@PostMapping("/crear")
-	public ResponseEntity<Mensaje> createEntity(@RequestParam("entidad") String entidad) throws JsonMappingException, JsonProcessingException{
+	public ResponseEntity<Mensaje> createEntity(@RequestParam("entidad") String entidad, @RequestParam("nombreUs") String nombreUs) throws JsonMappingException, JsonProcessingException{
 		Proyecto proyecto = new ObjectMapper().readValue(entidad, Proyecto.class);
+		Usuario usuario = usuarioService.getByNombre(nombreUs);
+		proyecto.setUsuario(usuario);
 		Proyecto dbProyecto = proyectoService.save(proyecto);
 		if(dbProyecto!=null) {
 			return new ResponseEntity<Mensaje>(new Mensaje("Proyecto creado con exito"), HttpStatus.OK);

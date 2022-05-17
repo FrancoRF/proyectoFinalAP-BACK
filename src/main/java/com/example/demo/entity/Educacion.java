@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.example.demo.security.entity.Usuario;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -30,7 +31,7 @@ public class Educacion implements Serializable {
     @JoinColumn(name = "usuario_nombre", referencedColumnName = "nombreUsuario")
     @JsonIgnoreProperties("educacion")
     private Usuario usuario;
-    
+
 	public Educacion() {
 	}
 
@@ -80,6 +81,15 @@ public class Educacion implements Serializable {
 
 	public void setUbicacion(String ubicacion) {
 		this.ubicacion = ubicacion;
+	}
+	
+	@JsonIgnore
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 }

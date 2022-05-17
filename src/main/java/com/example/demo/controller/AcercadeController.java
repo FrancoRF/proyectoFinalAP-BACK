@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.Mensaje;
 import com.example.demo.entity.Acercade;
+import com.example.demo.security.entity.Usuario;
+import com.example.demo.security.service.UsuarioService;
 import com.example.demo.service.AcercadeService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -32,6 +34,9 @@ public class AcercadeController {
 	@Autowired
 	AcercadeService acercadeService;
 	
+	@Autowired
+	UsuarioService usuarioService;
+	
 	@GetMapping("/")
 	public ResponseEntity<List<Acercade>> listAcercade(){
 		List<Acercade> list = acercadeService.list();
@@ -39,8 +44,10 @@ public class AcercadeController {
 	}
 	
 	@PostMapping("/crear")
-	public ResponseEntity<Mensaje> createEntity(@RequestParam("entidad") String entidad) throws JsonMappingException, JsonProcessingException{
+	public ResponseEntity<Mensaje> createEntity(@RequestParam("entidad") String entidad, @RequestParam("nombreUs") String nombreUs) throws JsonMappingException, JsonProcessingException{
 		Acercade acercade = new ObjectMapper().readValue(entidad, Acercade.class);
+		Usuario usuario = usuarioService.getByNombre(nombreUs);
+		acercade.setUsuario(usuario);
 		Acercade dbAcercade = acercadeService.save(acercade);
 		if(dbAcercade!=null) {
 			return new ResponseEntity<Mensaje>(new Mensaje("Objeto acercade creado con exito"), HttpStatus.OK);

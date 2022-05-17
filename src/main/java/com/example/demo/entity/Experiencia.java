@@ -3,9 +3,16 @@ package com.example.demo.entity;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.example.demo.security.entity.Usuario;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Experiencia implements Serializable {
@@ -20,6 +27,11 @@ public class Experiencia implements Serializable {
     private String fecha;
     private String ubicacion;
     
+    @ManyToOne(fetch =  FetchType.LAZY, optional = false)
+    @JoinColumn(name = "usuario_nombre", referencedColumnName = "nombreUsuario")
+    @JsonIgnoreProperties("experiencia")
+    private Usuario usuario;
+
 	public Experiencia() {
 	}
 
@@ -69,6 +81,15 @@ public class Experiencia implements Serializable {
 
 	public void setUbicacion(String ubicacion) {
 		this.ubicacion = ubicacion;
+	}
+	
+	@JsonIgnore
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 }

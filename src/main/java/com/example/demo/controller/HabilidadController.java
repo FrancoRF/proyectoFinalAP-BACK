@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.Mensaje;
 import com.example.demo.entity.Habilidad;
+import com.example.demo.security.entity.Usuario;
+import com.example.demo.security.service.UsuarioService;
 import com.example.demo.service.HabilidadService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -31,6 +33,9 @@ public class HabilidadController {
 	
 	@Autowired
 	HabilidadService habilidadService;
+	
+	@Autowired
+	UsuarioService usuarioService;
 
 	@GetMapping("/")
 	public ResponseEntity<List<Habilidad>> listExperiencia(){
@@ -39,8 +44,10 @@ public class HabilidadController {
 	}
 	
 	@PostMapping("/crear")
-	public ResponseEntity<Mensaje> createEntity(@RequestParam("entidad") String entidad) throws JsonMappingException, JsonProcessingException{
+	public ResponseEntity<Mensaje> createEntity(@RequestParam("entidad") String entidad, @RequestParam("nombreUs") String nombreUs) throws JsonMappingException, JsonProcessingException{
 		Habilidad habilidad = new ObjectMapper().readValue(entidad, Habilidad.class);
+		Usuario usuario = usuarioService.getByNombre(nombreUs);
+		habilidad.setUsuario(usuario);
 		Habilidad dbHabilidad = habilidadService.save(habilidad);
 		if(dbHabilidad!=null) {
 			return new ResponseEntity<Mensaje>(new Mensaje("Habilidad creada con exito"), HttpStatus.OK);
