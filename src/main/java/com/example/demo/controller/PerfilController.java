@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,6 +61,7 @@ public class PerfilController {
 		return new ResponseEntity<List<Perfil>>(list, HttpStatus.OK); 
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/crear")
 	public ResponseEntity<Mensaje> createEntity(@RequestParam("imagenPortada") MultipartFile imagenPortada ,@RequestParam("imagenPerfil") MultipartFile imagenPerfil ,@RequestParam("entidad") String entidad, @RequestParam("nombreUs") String nombreUs) throws IOException{
 		Perfil perfil = new ObjectMapper().readValue(entidad, Perfil.class);
@@ -78,6 +80,7 @@ public class PerfilController {
 		}
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/editar/{id}")
 	public ResponseEntity<?> updateEntity(@PathVariable("id") int id,@RequestParam("imagenPortadaEditada") MultipartFile imagenPortada ,@RequestParam("imagenPerfilEditada") MultipartFile imagenPerfil ,@RequestParam("entidad") String entidad) throws JsonMappingException, JsonProcessingException,  IOException{
 		
@@ -108,6 +111,7 @@ public class PerfilController {
 		
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/eliminar/{id}")
 	public ResponseEntity<?> eliminar(@PathVariable("id") int id){
 		if(!perfilService.existsById(id)) 
