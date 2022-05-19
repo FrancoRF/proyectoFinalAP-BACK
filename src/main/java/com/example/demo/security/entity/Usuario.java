@@ -27,7 +27,6 @@ import com.example.demo.entity.Proyecto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "user")
 public class Usuario implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
