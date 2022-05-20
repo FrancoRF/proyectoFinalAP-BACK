@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +29,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping("/auth/educaciones")
-@CrossOrigin(origins = "https://portafolioweb-f2d3d.web.app")
+@CrossOrigin(origins = "*")
 public class EducacionController {
 	
 	@Autowired
@@ -43,6 +44,7 @@ public class EducacionController {
 		return new ResponseEntity<List<Educacion>>(list, HttpStatus.OK); 
 	}
 	
+	@PreAuthorize("hasAnyRole('ADMIN','USER')")
 	@PostMapping("/crear")
 	public ResponseEntity<Mensaje> createEntity(@RequestParam("entidad") String entidad, @RequestParam("nombreUs") String nombreUs) throws JsonMappingException, JsonProcessingException{
 		Educacion educacion = new ObjectMapper().readValue(entidad, Educacion.class);
