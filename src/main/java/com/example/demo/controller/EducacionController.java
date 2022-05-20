@@ -28,7 +28,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping("/educaciones")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "https://portafolioweb-f2d3d.web.app/auth")
 public class EducacionController {
 	
 	@Autowired
