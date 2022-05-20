@@ -27,8 +27,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
-@RequestMapping("/educaciones")
-@CrossOrigin(origins = "https://portafolioweb-f2d3d.web.app/auth")
+@RequestMapping("/auth/educaciones")
+@CrossOrigin(origins = "https://portafolioweb-f2d3d.web.app")
 public class EducacionController {
 	
 	@Autowired
