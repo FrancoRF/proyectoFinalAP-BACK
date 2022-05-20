@@ -31,7 +31,7 @@ import com.example.demo.security.service.UsuarioService;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin("https://portafolioweb-f2d3d.web.app")
+@CrossOrigin
 public class AuthController {
 	
 	@Autowired
