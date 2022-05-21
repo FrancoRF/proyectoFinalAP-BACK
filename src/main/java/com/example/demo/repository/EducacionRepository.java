@@ -9,8 +9,6 @@ import com.example.demo.entity.Educacion;
 
 @Repository
 public interface EducacionRepository extends JpaRepository<Educacion, Integer>{
-	
 	Optional<Educacion> findByEntidad (String entidad);
 	boolean existsByEntidad (String entidad);
-
 }
