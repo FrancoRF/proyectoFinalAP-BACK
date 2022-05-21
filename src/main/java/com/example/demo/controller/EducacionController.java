@@ -48,7 +48,7 @@ public class EducacionController {
 		Educacion educacion = new ObjectMapper().readValue(entidad, Educacion.class);
 		System.out.println(nombreUs);
 		Usuario usuario = usuarioService.getByNombre(nombreUs);
-		System.out.println(usuarioService.getByNombre(nombreUs));
+		System.out.println(usuarioService.existsByNombreUsuario(nombreUs));
 		System.out.println(usuario);
 		educacion.setUsuario(usuario);
 		Educacion dbEducacion = educacionService.save(educacion);
