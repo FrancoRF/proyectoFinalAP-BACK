@@ -46,7 +46,8 @@ public class EducacionController {
 	@PostMapping("/crear")
 	public ResponseEntity<Mensaje> createEntity(@RequestParam("entidad") String entidad, @RequestParam("nombreUs") String nombreUs) throws JsonMappingException, JsonProcessingException{
 		Educacion educacion = new ObjectMapper().readValue(entidad, Educacion.class);
-		Usuario usuario = usuarioService.getByNombre(nombreUs);
+		Usuario usuario = new Usuario();
+		usuario.setNombreUsuario(nombreUs);
 		educacion.setUsuario(usuario);
 		Educacion dbEducacion = educacionService.save(educacion);
 		if(dbEducacion!=null) {
