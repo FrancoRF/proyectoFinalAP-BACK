@@ -52,6 +52,7 @@ public class EducacionController {
 		usuarioUno.setNombreUsuario(nombreUs);
 		
 		System.out.println(usuarioUno.getNombreUsuario());
+		System.out.println(usuarioUno);
 		
 		Usuario usuario = usuarioService.getByNombre(nombreUs);
 		
