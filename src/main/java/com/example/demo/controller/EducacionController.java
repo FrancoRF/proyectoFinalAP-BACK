@@ -59,7 +59,7 @@ public class EducacionController {
 		System.out.println(usuarioService.getByNombreUsuario(nombreUs));
 		System.out.println(usuario);
 		
-		educacion.setUsuario(usuario);
+		educacion.setUsuario(usuarioUno);
 		Educacion dbEducacion = educacionService.save(educacion);
 		if(dbEducacion!=null) {
 			return new ResponseEntity<Mensaje>(new Mensaje("Educacion creada con exito"), HttpStatus.OK);
