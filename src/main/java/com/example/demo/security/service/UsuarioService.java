@@ -9,14 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.security.entity.Usuario;
-import com.example.demo.security.repository.UsuarioRepo;
+import com.example.demo.security.repository.UsuarioRepository;
 
 @Service
 @Transactional
 public class UsuarioService {
 	
 	@Autowired
-	UsuarioRepo userRepository;
+	UsuarioRepository userRepository;
 	
 	public List<Usuario> listaUsuario(){
 		return userRepository.findAll();
