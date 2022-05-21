@@ -22,8 +22,8 @@ public class UsuarioService {
 		return userRepository.findAll();
 	}
 	
-	public Usuario getByNombre(String nombreUser) {
-		return userRepository.findByNombre(nombreUser);
+	public Usuario getByNombre(String nombreUsuario) {
+		return userRepository.findByNombre(nombreUsuario);
 	}
 	
 	public Optional<Usuario> getByNombreUsuario(String nombreUsuario){
