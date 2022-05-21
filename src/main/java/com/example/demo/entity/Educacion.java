@@ -14,14 +14,7 @@ import com.example.demo.security.entity.Usuario;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 @Entity
-@Data
-@Builder
-@NoArgsConstructor
 public class Educacion implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
