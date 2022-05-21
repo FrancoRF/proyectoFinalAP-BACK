@@ -36,6 +36,7 @@ public class Educacion implements Serializable {
 	}
 
 	public Educacion(int id, String entidad, String titulo, String fecha, String ubicacion) {
+		super();
 		this.id = id;
 		this.entidad = entidad;
 		this.titulo = titulo;
