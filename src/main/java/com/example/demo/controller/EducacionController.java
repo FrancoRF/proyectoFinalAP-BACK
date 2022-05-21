@@ -48,6 +48,11 @@ public class EducacionController {
 		Educacion educacion = new ObjectMapper().readValue(entidad, Educacion.class);
 		System.out.println(nombreUs);
 		
+		Usuario usuarioUno = new Usuario();
+		usuarioUno.setNombreUsuario(nombreUs);
+		
+		System.out.println(usuarioUno.getNombreUsuario());
+		
 		Usuario usuario = usuarioService.getByNombre(nombreUs);
 		
 		System.out.println(usuarioService.getByNombreUsuario(nombreUs));
