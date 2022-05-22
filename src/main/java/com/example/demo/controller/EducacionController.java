@@ -54,7 +54,8 @@ public class EducacionController {
 		System.out.println(usuarioTemp.getNombreUsuario());
 		System.out.println(nombre);
 		for(Usuario usuario : usuarios) {
-			System.out.println(usuario.getNombreUsuario().intern() == usuarioTemp.getNombreUsuario().intern());
+			String nombreUsuario = usuario.getNombreUsuario();
+			System.out.println(nombreUsuario);
 		}
 		educacion.getUsuario().setNombreUsuario(nombreUs);
 		Educacion dbEducacion = educacionService.save(educacion);
