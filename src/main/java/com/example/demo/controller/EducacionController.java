@@ -47,6 +47,7 @@ public class EducacionController {
 	public ResponseEntity<Mensaje> createEntity(@RequestParam("entidad") String entidad, @RequestParam("nombreUs") String nombreUs) throws JsonMappingException, JsonProcessingException{
 		Educacion educacion = new ObjectMapper().readValue(entidad, Educacion.class);
 		List<Usuario> usuarios = usuarioService.listaUsuario();
+		nombreUs.replace("'", "");
 		Usuario usuarioTemp = new Usuario();
 		usuarioTemp.setNombreUsuario(nombreUs);
 		String nombre = nombreUs;
