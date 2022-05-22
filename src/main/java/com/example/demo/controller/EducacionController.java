@@ -48,9 +48,10 @@ public class EducacionController {
 		Educacion educacion = new ObjectMapper().readValue(entidad, Educacion.class);
 		List<Usuario> usuarios = usuarioService.listaUsuario();
 		for(Usuario usuario : usuarios) {
-			if(usuario.getNombreUsuario() == nombreUs) {
+			if(usuario.getNombreUsuario()!=nombreUs) {
+				System.out.println("no hay considencia");
+			} else {
 				System.out.println(usuario);
-				System.out.println("hay considencia");
 			}
 		}
 		educacion.getUsuario().setNombreUsuario(nombreUs);
