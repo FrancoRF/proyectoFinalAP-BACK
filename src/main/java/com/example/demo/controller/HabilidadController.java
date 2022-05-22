@@ -46,8 +46,11 @@ public class HabilidadController {
 	@PostMapping("/crear")
 	public ResponseEntity<Mensaje> createEntity(@RequestParam("entidad") String entidad, @RequestParam("nombreUs") String nombreUs) throws JsonMappingException, JsonProcessingException{
 		Habilidad habilidad = new ObjectMapper().readValue(entidad, Habilidad.class);
-		Usuario usuario = usuarioService.getByNombre(nombreUs);
-		habilidad.setUsuario(usuario);
+		List<Usuario> usuarios = usuarioService.listaUsuario();
+		for(Usuario usuario : usuarios) {
+			if(usuario.getNombreUsuario().equals(nombreUs)) 
+				habilidad.setUsuario(usuario);
+		}
 		Habilidad dbHabilidad = habilidadService.save(habilidad);
 		if(dbHabilidad!=null) {
 			return new ResponseEntity<Mensaje>(new Mensaje("Habilidad creada con exito"), HttpStatus.OK);

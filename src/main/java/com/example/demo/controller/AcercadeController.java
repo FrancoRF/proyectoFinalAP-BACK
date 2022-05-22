@@ -46,8 +46,11 @@ public class AcercadeController {
 	@PostMapping("/crear")
 	public ResponseEntity<Mensaje> createEntity(@RequestParam("entidad") String entidad, @RequestParam("nombreUs") String nombreUs) throws JsonMappingException, JsonProcessingException{
 		Acercade acercade = new ObjectMapper().readValue(entidad, Acercade.class);
-		Usuario usuario = usuarioService.getByNombre(nombreUs);
-		acercade.setUsuario(usuario);
+		List<Usuario> usuarios = usuarioService.listaUsuario();
+		for(Usuario usuario : usuarios) {
+			if(usuario.getNombreUsuario().equals(nombreUs)) 
+				acercade.setUsuario(usuario);
+		}
 		Acercade dbAcercade = acercadeService.save(acercade);
 		if(dbAcercade!=null) {
 			return new ResponseEntity<Mensaje>(new Mensaje("Objeto acercade creado con exito"), HttpStatus.OK);

@@ -67,8 +67,11 @@ public class PerfilController {
 		perfil.setImgPerfil(imagenPerfil.getOriginalFilename());
 		perfil.setImagenPor(imagenPortada.getBytes());
 		perfil.setImgPortada(imagenPortada.getOriginalFilename());
-		Usuario usuario = usuarioService.getByNombre(nombreUs);
-		perfil.setUsuario(usuario);
+		List<Usuario> usuarios = usuarioService.listaUsuario();
+		for(Usuario usuario : usuarios) {
+			if(usuario.getNombreUsuario().equals(nombreUs)) 
+				perfil.setUsuario(usuario);
+		}
 		Perfil dbPerfil = perfilService.save(perfil);
 		
 		if(dbPerfil!=null) {

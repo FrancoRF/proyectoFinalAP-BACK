@@ -46,8 +46,11 @@ public class ProyectoController {
 	@PostMapping("/crear")
 	public ResponseEntity<Mensaje> createEntity(@RequestParam("entidad") String entidad, @RequestParam("nombreUs") String nombreUs) throws JsonMappingException, JsonProcessingException{
 		Proyecto proyecto = new ObjectMapper().readValue(entidad, Proyecto.class);
-		Usuario usuario = usuarioService.getByNombre(nombreUs);
-		proyecto.setUsuario(usuario);
+		List<Usuario> usuarios = usuarioService.listaUsuario();
+		for(Usuario usuario : usuarios) {
+			if(usuario.getNombreUsuario().equals(nombreUs)) 
+				proyecto.setUsuario(usuario);
+		}
 		Proyecto dbProyecto = proyectoService.save(proyecto);
 		if(dbProyecto!=null) {
 			return new ResponseEntity<Mensaje>(new Mensaje("Proyecto creado con exito"), HttpStatus.OK);

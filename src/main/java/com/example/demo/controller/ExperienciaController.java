@@ -46,8 +46,11 @@ public class ExperienciaController {
 	@PostMapping("/crear")
 	public ResponseEntity<Mensaje> createEntity(@RequestParam("entidad") String entidad, @RequestParam("nombreUs") String nombreUs) throws JsonMappingException, JsonProcessingException{
 		Experiencia experiencia = new ObjectMapper().readValue(entidad, Experiencia.class);
-		Usuario usuario = usuarioService.getByNombre(nombreUs);
-		experiencia.setUsuario(usuario);
+		List<Usuario> usuarios = usuarioService.listaUsuario();
+		for(Usuario usuario : usuarios) {
+			if(usuario.getNombreUsuario().equals(nombreUs)) 
+				experiencia.setUsuario(usuario);
+		}
 		Experiencia dbExperiencia = experienciaService.save(experiencia);
 		if(dbExperiencia!=null) {
 			return new ResponseEntity<Mensaje>(new Mensaje("Experiencia creada con exito"), HttpStatus.OK);
