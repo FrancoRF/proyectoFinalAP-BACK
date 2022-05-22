@@ -49,6 +49,10 @@ public class EducacionController {
 		List<Usuario> usuarios = usuarioService.listaUsuario();
 		Usuario usuarioTemp = new Usuario();
 		usuarioTemp.setNombreUsuario(nombreUs);
+		String nombre = nombreUs;
+		System.out.println(nombreUs);
+		System.out.println(usuarioTemp.getNombreUsuario());
+		System.out.println(nombre);
 		for(Usuario usuario : usuarios) {
 			System.out.println(usuario.getNombreUsuario().intern() == usuarioTemp.getNombreUsuario().intern());
 		}
