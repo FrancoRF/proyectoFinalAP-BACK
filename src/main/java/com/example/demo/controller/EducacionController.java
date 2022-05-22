@@ -47,18 +47,9 @@ public class EducacionController {
 	public ResponseEntity<Mensaje> createEntity(@RequestParam("entidad") String entidad, @RequestParam("nombreUs") String nombreUs) throws JsonMappingException, JsonProcessingException{
 		Educacion educacion = new ObjectMapper().readValue(entidad, Educacion.class);
 		List<Usuario> usuarios = usuarioService.listaUsuario();
-		nombreUs.replace("'", "");
-		Usuario usuarioTemp = new Usuario();
-		usuarioTemp.setNombreUsuario(nombreUs);
-		String nombre = nombreUs;
-		System.out.println(nombreUs);
-		System.out.println(usuarioTemp.getNombreUsuario());
-		System.out.println(nombre);
 		for(Usuario usuario : usuarios) {
-			String nombreUsuario = usuario.getNombreUsuario();
-			System.out.println(nombreUsuario);
+			System.out.println(usuario.getNombreUsuario().equals(nombreUs));
 		}
-		educacion.getUsuario().setNombreUsuario(nombreUs);
 		Educacion dbEducacion = educacionService.save(educacion);
 		if(dbEducacion!=null) {
 			return new ResponseEntity<Mensaje>(new Mensaje("Educacion creada con exito"), HttpStatus.OK);
