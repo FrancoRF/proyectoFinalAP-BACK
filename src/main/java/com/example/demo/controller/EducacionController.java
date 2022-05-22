@@ -50,11 +50,7 @@ public class EducacionController {
 		Usuario usuarioTemp = new Usuario();
 		usuarioTemp.setNombreUsuario(nombreUs);
 		for(Usuario usuario : usuarios) {
-			if(usuario.getNombreUsuario()==usuarioTemp.getNombreUsuario()) {
-				System.out.println("no hay considencia");
-			} else {
-				System.out.println(usuario);
-			}
+			System.out.println(usuario.getNombreUsuario().equals(usuarioTemp.getNombreUsuario()));
 		}
 		educacion.getUsuario().setNombreUsuario(nombreUs);
 		Educacion dbEducacion = educacionService.save(educacion);
